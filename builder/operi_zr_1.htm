@@ -1,0 +1,227 @@
+<html window-resizable="false">
+
+<head>
+    <meta charset="utf-8">
+    <style>
+        .table>table,
+        tr,
+        td,
+        tbody,
+        th {
+            border: 1px solid black;
+            flow: table-fixed;
+            width: *;
+            padding: 0;
+            border-spacing: 0;
+            border-collapse: collapse;
+            overflow-x: auto;
+            text-align: center;
+            line-height: 25px;
+        }
+
+        div {
+            height: 28px;
+            border: 1px solid black;
+            flow: horizontal;
+            /* display:inline-block; */
+            vertical-align: middle;
+            horizontal-align: center;
+            /* display: flex; */
+            /* flex-direction: row; */
+
+
+        }
+
+        .th {
+            width: *;
+            /* text-align: center; */
+            /* display:table-cell;  */
+            /* vertical-align:middle; */
+            /* margin:auto */
+            font: size 14px;
+        }
+
+        .th_1 {
+            width: *;
+            font: size 9px;
+        }
+    </style>
+</head>
+<script type="module">
+    import * as Storage from "@storage";
+    function login() {
+        if (globalThis.token == undefined)  {
+            get_token(); 
+            // postit(globalThis.token);
+        }
+        else {
+            postit(globalThis.token);
+            if (globalThis.info =='token 超时请重新登陆！') {
+                get_token();
+                // postit(globalThis.token);
+            }
+        }
+    };
+    // globalThis.class="1234";
+    // Storage.createIndex("dada","123");
+    // index.set('myCat', 'Tom');
+    // import * as JsBarcode from ("../builder/js/JsBarcode.min.js");
+    // console.log("123");
+    // window.isTopmost = true;
+    // // window.isResizable = false;
+    // console.log("321");
+    document.on("click", "button#but", function () {
+        let data = JSON.stringify(document.$("form").value, null, "  ");
+        console.log(data);
+        console.log(globalThis.P_RES);
+    });
+    // document.on("change", "form", function (event, form) {
+    //     let data = JSON.stringify(form.value, null, "  ");
+    //     console.log(data);
+    //     document.$("textarea#json").value = JSON.stringify(form.value, null, "  ");
+    // });
+    // async function get_token() {
+    //     try {
+    //         let resp = await fetch('http://194.0.11.86:3001/login', {
+    //             method: 'POST',
+    //             headers: { 'Content-Type': 'application/json' },
+    //             body: JSON.stringify({ user: 'SX7X/vPEzHwHu7OxtTc=', password: '1c9ac0159c94d8d0cbedc973445af2da' })
+    //         });
+    //         let r_token = await resp.json();
+    //         console.log(r_token)
+    //         // const myObj = JSON.parse(r_token);
+    //         return r_token;
+    //     } catch (e) {
+    //         console.log(e);
+    //     }
+    // }
+
+
+    // (async () => {
+    //     let assd = await get_token();
+    //     globalThis.class=assd;
+    //     postit(assd);
+    // })();
+    function get_token() {
+        fetch('http://194.0.11.86:3001/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user: 'SX7X/vPEzHwHu7OxtTc=', password: '1c9ac0159c94d8d0cbedc973445af2da' })
+        })
+        .then(function (response) {
+            // console.log(response.status);
+            // console.log(response.json().token);
+            return response.json();
+        })
+        .then(function (data) {
+            globalThis.token = data.token 
+            postit(globalThis.token);
+        })
+        .catch(function(error){
+            console.log(error);
+            })
+        ;
+    }
+    function postit(p_token) {
+        fetch('http://194.0.11.86:3001/udi/select_1', {
+                method: 'POST',
+                headers: { 'token': p_token },
+                body: JSON.stringify({ d_date1: '2021-09-01T00:00:000', d_date2: '2021-09-02T00:00:000' })
+            })
+        .then(function (response) {
+            return response;
+        })
+        .then(function (data) {
+            // console.log(data.text() );
+            if (data.text() == 'token 超时请重新登陆！'){
+                globalThis.info = data.text();
+            }
+            else {
+                globalThis.info = data.json();
+            }   
+        })
+        .catch(function(error){
+            console.log(error);
+            })
+        ;
+    }    
+    // get_token()
+    // console.log('1')
+    // console.log(get_token3())
+    // get_token3()
+    // console.log(rrr);
+    // postit();
+    // login()
+    // get_token3();
+    login();
+
+   
+</script>
+
+<body>
+    <h1 style="text-align: center;">植入医疗器械使用登记表</h1>
+    <form .table>
+        <div>
+            <div .th>
+                病人姓名
+            </div>
+            <div .th>
+                住院号
+            </div>
+            <div .th>
+                手术时间
+            </div>
+            <div .th>
+                手术医生签名
+            </div>
+        </div>
+        <div>
+            <div .th>
+                <output|text(name) value="ces ">
+            </div>
+            <div .th>
+                <output|text(s_hospital_no) value="ces ">
+            </div>
+            <div .th>
+                <output|text(opera_time) value="ces ">
+            </div>
+            <div .th>
+                <output|text(opera_doctor) value="ces ">
+            </div>
+        </div>
+        <div>
+            <div .th>
+                产品名称
+            </div>
+            <div .th>
+                规格/型号
+            </div>
+            <div .th>
+                制造商
+            </div>
+        </div>
+        <div>
+            <div .th_1>
+                详见合格证
+            </div>
+            <div .th_1>
+                详见合格证
+            </div>
+            <div .th>
+                <output|text(factory) value="ces ">
+            </div>
+        </div>
+        <div #use_detail>
+
+        </div>
+
+    </form>
+
+
+    <svg #barcode style="border: 1px;"></svg>
+
+    <button #but></button>
+    <div #details></div>
+</body>
+
+</html>
