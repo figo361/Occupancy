@@ -50,112 +50,60 @@
 <script type="module">
     import * as Storage from "@storage";
     function login() {
-        if (globalThis.token == undefined)  {
-            get_token(); 
-            // postit(globalThis.token);
+        if (globalThis.token == undefined) {
+            get_token();
+
         }
         else {
             postit(globalThis.token);
-            if (globalThis.info =='token 超时请重新登陆！') {
+            if (globalThis.info == 'token 超时请重新登陆！') {
                 get_token();
-                // postit(globalThis.token);
             }
         }
     };
-    // globalThis.class="1234";
-    // Storage.createIndex("dada","123");
-    // index.set('myCat', 'Tom');
-    // import * as JsBarcode from ("../builder/js/JsBarcode.min.js");
-    // console.log("123");
-    // window.isTopmost = true;
-    // // window.isResizable = false;
-    // console.log("321");
-    document.on("click", "button#but", function () {
-        let data = JSON.stringify(document.$("form").value, null, "  ");
-        console.log(data);
-        console.log(globalThis.P_RES);
-    });
-    // document.on("change", "form", function (event, form) {
-    //     let data = JSON.stringify(form.value, null, "  ");
-    //     console.log(data);
-    //     document.$("textarea#json").value = JSON.stringify(form.value, null, "  ");
-    // });
-    // async function get_token() {
-    //     try {
-    //         let resp = await fetch('http://194.0.11.86:3001/login', {
-    //             method: 'POST',
-    //             headers: { 'Content-Type': 'application/json' },
-    //             body: JSON.stringify({ user: 'SX7X/vPEzHwHu7OxtTc=', password: '1c9ac0159c94d8d0cbedc973445af2da' })
-    //         });
-    //         let r_token = await resp.json();
-    //         console.log(r_token)
-    //         // const myObj = JSON.parse(r_token);
-    //         return r_token;
-    //     } catch (e) {
-    //         console.log(e);
-    //     }
-    // }
-
-
-    // (async () => {
-    //     let assd = await get_token();
-    //     globalThis.class=assd;
-    //     postit(assd);
-    // })();
     function get_token() {
         fetch('http://194.0.11.86:3001/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ user: 'SX7X/vPEzHwHu7OxtTc=', password: '1c9ac0159c94d8d0cbedc973445af2da' })
         })
-        .then(function (response) {
-            // console.log(response.status);
-            // console.log(response.json().token);
-            return response.json();
-        })
-        .then(function (data) {
-            globalThis.token = data.token 
-            postit(globalThis.token);
-        })
-        .catch(function(error){
-            console.log(error);
+            .then(function (response) {
+                return response.json();
             })
-        ;
+            .then(function (data) {
+                globalThis.token = data.token
+                postit(globalThis.token);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+            ;
     }
     function postit(p_token) {
         fetch('http://194.0.11.86:3001/udi/select_1', {
-                method: 'POST',
-                headers: { 'token': p_token },
-                body: JSON.stringify({ d_date1: '2021-09-01T00:00:000', d_date2: '2021-09-02T00:00:000' })
-            })
-        .then(function (response) {
-            return response;
+            method: 'POST',
+            headers: { 'token': p_token },
+            body: JSON.stringify({ d_date1: '2021-09-01T00:00:000', d_date2: '2021-09-02T00:00:000' })
         })
-        .then(function (data) {
-            // console.log(data.text() );
-            if (data.text() == 'token 超时请重新登陆！'){
-                globalThis.info = data.text();
-            }
-            else {
-                globalThis.info = data.json();
-            }   
-        })
-        .catch(function(error){
-            console.log(error);
+            .then(function (response) {
+                return response;
             })
-        ;
-    }    
-    // get_token()
-    // console.log('1')
-    // console.log(get_token3())
-    // get_token3()
-    // console.log(rrr);
-    // postit();
-    // login()
-    // get_token3();
+            .then(function (data) {
+                if (data.text() == 'token 超时请重新登陆！') {
+                    globalThis.info = data.text();
+                }
+                else {
+                    globalThis.info = data.json();
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+            ;
+    }
     login();
 
-   
+
 </script>
 
 <body>
